@@ -64,7 +64,8 @@ func (a *AyahRepository) FindBySurah(ctx context.Context, surahID, from, to int)
 	juz_number,
 	sajda_type,
 	revelation_type
-	FROM ayahs WHERE surah_id = ? AND number_in_surah BETWEEN ? AND ?`
+	FROM ayahs WHERE surah_id = ? AND number_in_surah BETWEEN ? AND ?
+	ORDER BY number_in_surah ASC`
 
 	rows, err := a.db.QueryContext(ctx, query, surahID, from, to)
 	if err != nil {
@@ -78,8 +79,8 @@ func (a *AyahRepository) FindBySurah(ctx context.Context, surahID, from, to int)
 		var ayah ayah.Ayah
 		err := rows.Scan(
 			&ayah.ID,
-			&ayah.NumberInSurah,
 			&ayah.SurahID,
+			&ayah.NumberInSurah,
 			&ayah.TextUthmani,
 			&ayah.TranslationIdo,
 			&ayah.TranslationEn,
@@ -119,8 +120,8 @@ func (a *AyahRepository) FindBySurahAndNumber(ctx context.Context, surahID, numb
 	var ayah ayah.Ayah
 	err := row.Scan(
 		&ayah.ID,
-		&ayah.NumberInSurah,
 		&ayah.SurahID,
+		&ayah.NumberInSurah,
 		&ayah.TextUthmani,
 		&ayah.TranslationIdo,
 		&ayah.TranslationEn,
